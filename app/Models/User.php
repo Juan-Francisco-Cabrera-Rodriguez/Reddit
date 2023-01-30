@@ -42,4 +42,14 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isTrusted()
+    {
+        return $this->trusted;
+    }
 }
+
+
+// $channel = App\Models\Channel::create([ 'title' => 'Ruby', 'slug' => 'Ruby', 'color' => 'blue' ]);
+
+// $channel = App\Models\Channel::create([ 'title' => 'JavaScript', 'slug' => 'JavaScript', 'color' => 'green' ]);

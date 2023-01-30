@@ -6,6 +6,7 @@ use App\Models\CommunityLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Channel;
+
 class CommunityLinkController extends Controller
 {
     /**
@@ -15,10 +16,11 @@ class CommunityLinkController extends Controller
      */
     public function index()
     {
-        
-        $channels = Channel::orderBy('title','asc')->get();
 
-        $links = CommunityLink::paginate(25);
+        $channels = Channel::orderBy('title', 'asc')->get();
+
+        $links = CommunityLink::where('approved', 1)->paginate(25);
+
         return view('community/index', compact('links', 'channels'));
     }
 
@@ -29,7 +31,8 @@ class CommunityLinkController extends Controller
      */
     public function create()
     {
-        //
+        $channels = Channel::orderBy('title', 'asc')->get();
+        return view('community/create', compact('channels'));
     }
 
     /**
@@ -47,13 +50,17 @@ class CommunityLinkController extends Controller
 
         $this->validate($request, [
             'title' => 'required',
-            'link' => 'required|active_url|unique:community_links',
-            'channel_id' => 'required|exists:channels,id'
+            'link' => 'required|active_url',
+            'channel_id' => 'required|exists:channels,id',
+            'link' => 'required|active_url|unique:community_links'
 
         ]);
 
 
-        return back();
+        $approved = Auth::user()->trusted ? true : false;
+        request()->merge(['user_id' => Auth::id(), 'approved' => $approved]);
+        CommunityLink::create($request->all());
+        return back()->with('success', 'Link added successfully');
     }
 
     /**
@@ -100,9 +107,5 @@ class CommunityLinkController extends Controller
     {
         //
     }
-
-
-
-
 
 }

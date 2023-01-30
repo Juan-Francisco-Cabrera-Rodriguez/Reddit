@@ -13,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('channels', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
 
-            $table->id();
-            $table->string('title');
-            $table->string('slug')->unique();
-            $table->string('color');
-            $table->timestamps();
+            $table->boolean('trusted')->default(0);
         });
     }
 
@@ -30,6 +26,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('channels');
+        Schema::table('users', function (Blueprint $table) {
+
+            $table->dropColumn('trusted');
+        });
     }
 };

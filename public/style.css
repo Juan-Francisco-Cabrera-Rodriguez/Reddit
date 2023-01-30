@@ -1,0 +1,75 @@
+:root {
+    --color01: #50b63e;
+}
+
+li::marker {
+    content: "💀";
+}
+
+li>span {
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+li>a {
+    color: var(--color01);
+    text-decoration: none;
+    position: relative;
+    padding: 2px 2px;
+    transition: all .2s ease-out;
+}
+
+a:after {
+    content: " ";
+    width: 100%;
+    height: 1px;
+    background: var(--color01);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transition: all .2s ease-out;
+}
+
+a:before {
+    content: " ";
+    width: 4px;
+    height: 4px;
+    background: var(--color01);
+    position: absolute;
+    right: -4px;
+    bottom: 0;
+    opacity: 0;
+}
+
+a:hover {
+    background: rgba(57, 255, 20, 0.1);
+    transition: all .1s ease-out;
+    padding: 2px 8px;
+}
+
+a:hover:after {
+    width: 0px;
+    transition: all .1s ease-out;
+}
+
+a:hover:before {
+    opacity: 1;
+    animation: blink .4s infinite .1s;
+    transition: all .1s ease-out;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
