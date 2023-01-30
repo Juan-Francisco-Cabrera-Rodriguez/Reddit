@@ -14,7 +14,8 @@ class CommunityLinkController extends Controller
      */
     public function index()
     {
-        return view('community/index');
+        $links = CommunityLink::paginate(25);
+        return view('community/index', compact('links'));
     }
 
     /**

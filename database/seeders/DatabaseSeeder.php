@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\CommunityLink;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,5 +22,8 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        DB::delete('delete from community_links');
+        CommunityLink::factory()->count(50)->create();
     }
 }
