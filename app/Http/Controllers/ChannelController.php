@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CommunityLink;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Channel;
-class CommunityLinkController extends Controller
+use Illuminate\Http\Request;
+
+class ChannelController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +14,7 @@ class CommunityLinkController extends Controller
      */
     public function index()
     {
-        
-        $channels = Channel::orderBy('title','asc')->get();
-
-        $links = CommunityLink::paginate(25);
-        return view('community/index', compact('links', 'channels'));
+        //
     }
 
     /**
@@ -38,31 +33,18 @@ class CommunityLinkController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
     public function store(Request $request)
     {
-        request()->merge(['user_id' => Auth::id(), 'channel_id' => 1]);
-        CommunityLink::create($request->all());
-
-
-        $this->validate($request, [
-            'title' => 'required',
-            'link' => 'required|active_url|unique:community_links',
-            'channel_id' => 'required|exists:channels,id'
-
-        ]);
-
-
-        return back();
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CommunityLink  $communityLink
+     * @param  \App\Models\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function show(CommunityLink $communityLink)
+    public function show(Channel $channel)
     {
         //
     }
@@ -70,10 +52,10 @@ class CommunityLinkController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CommunityLink  $communityLink
+     * @param  \App\Models\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function edit(CommunityLink $communityLink)
+    public function edit(Channel $channel)
     {
         //
     }
@@ -82,10 +64,10 @@ class CommunityLinkController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CommunityLink  $communityLink
+     * @param  \App\Models\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CommunityLink $communityLink)
+    public function update(Request $request, Channel $channel)
     {
         //
     }
@@ -93,16 +75,11 @@ class CommunityLinkController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CommunityLink  $communityLink
+     * @param  \App\Models\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CommunityLink $communityLink)
+    public function destroy(Channel $channel)
     {
         //
     }
-
-
-
-
-
 }
