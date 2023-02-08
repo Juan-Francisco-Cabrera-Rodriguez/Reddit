@@ -44,9 +44,6 @@ class CommunityLinkController extends Controller
 
     public function store(Request $request)
     {
-        request()->merge(['user_id' => Auth::id(), 'channel_id' => 1]);
-        CommunityLink::create($request->all());
-
 
         $this->validate($request, [
             'title' => 'required',
@@ -56,11 +53,13 @@ class CommunityLinkController extends Controller
 
         ]);
 
-
         $approved = Auth::user()->trusted ? true : false;
         request()->merge(['user_id' => Auth::id(), 'approved' => $approved]);
         CommunityLink::create($request->all());
         return back()->with('success', 'Link added successfully');
+
+        request()->merge(['user_id' => Auth::id(), 'channel_id' => 1]);
+        CommunityLink::create($request->all());
     }
 
     /**
