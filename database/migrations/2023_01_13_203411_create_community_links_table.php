@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('user_id')->index();
             $table->integer('channel_id')->index();
             $table->string('title');
-            $table->string('link')->unique();
+            $table->string('link');
             $table->boolean('approved')->default(0);
             $table->timestamps();
         });

@@ -24,4 +24,14 @@ class CommunityLink extends Model
         return $this->belongsTo(Channel::class);
     }
 
+
+    protected static function hasAlreadyBeenSubmitted($link)
+    {
+        if ($existing = static::where('link', $link)->first()) {
+            $existing->touch();
+            $existing->save();
+            return true;
+        }
+        return false;
+    }
 }
