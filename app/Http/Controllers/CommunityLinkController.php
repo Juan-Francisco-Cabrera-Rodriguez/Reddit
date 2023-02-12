@@ -16,14 +16,21 @@ class CommunityLinkController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Channel $channel = null)
     {
+        $title = null;
+        if ($channel == null) {
+            $links = CommunityLink::where('approved', true)->latest('updated_at')->paginate(25);
+        } else {
+            $links = CommunityLink::where("channel_id", $channel->id)->paginate(25);
+
+            $title = '- ' . $channel->title;
+
+        }
 
         $channels = Channel::orderBy('title', 'asc')->get();
 
-        $links = CommunityLink::where('approved', true)->latest('updated_at')->paginate(25);
-
-        return view('community/index', compact('links', 'channels'));
+        return view('community/index', compact('links', 'channels','title'));
     }
 
     /**
@@ -48,8 +55,10 @@ class CommunityLinkController extends Controller
     {
 
         $this->validate($request, (new CommynityLinkForm)->rules());
+        $link = new CommunityLink();
+        $link->user_id = Auth::id();
 
-        if (CommunityLink::hasAlreadyBeenSubmitted($request->link)) {
+        if ($link->hasAlreadyBeenSubmitted($request->link)) {
             return back()->with('success', 'Link added successfully');
         }
 
